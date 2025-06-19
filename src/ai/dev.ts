@@ -2,4 +2,5 @@ import { config } from 'dotenv';
 config();
 
 import '@/ai/flows/personalized-safety-tips.ts';
-import '@/ai/flows/disaster-info.ts'; // Updated import
+import '@/ai/flows/disaster-info.ts';
+import '@/ai/flows/assess-disaster-severity.ts'; // New flow import

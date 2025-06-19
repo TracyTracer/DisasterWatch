@@ -4,12 +4,13 @@ import { DisasterMap } from '@/components/disaster/DisasterMap';
 import { RecentDisasters } from '@/components/disaster/RecentDisasters';
 import { DisasterInfoForm } from '@/components/chatbot/DisasterInfoForm';
 import { PersonalizedSafetyTipsForm } from '@/components/chatbot/PersonalizedSafetyTipsForm';
+import { DisasterSeverityAssessmentForm } from '@/components/chatbot/DisasterSeverityAssessmentForm'; // New import
 import { ProfessionalChat } from '@/components/chatbot/ProfessionalChat';
 import { EmergencyHelp } from '@/components/emergency/EmergencyHelp';
 import { AlertSettings } from '@/components/alerts/AlertSettings';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { MessageCircle, BellRing, Activity, LifeBuoy } from 'lucide-react';
+import { MessageCircle, BellRing, Activity, LifeBuoy, ShieldAlert } from 'lucide-react'; // Added ShieldAlert
 
 export default function HomePage() {
   return (
@@ -25,7 +26,7 @@ export default function HomePage() {
           {/* Right Column: Tabs for Info */}
           <div className="lg:col-span-1">
             <Tabs defaultValue="recent-events" className="h-full flex flex-col">
-              <TabsList className="grid w-full grid-cols-4 mb-4"> {/* Updated to 4 cols */}
+              <TabsList className="grid w-full grid-cols-4 mb-4">
                 <TabsTrigger value="recent-events" aria-label="Recent Events">
                   <Activity className="h-5 w-5 sm:mr-2" />
                   <span className="hidden sm:inline">Recent Events</span>
@@ -34,7 +35,7 @@ export default function HomePage() {
                   <MessageCircle className="h-5 w-5 sm:mr-2" />
                   <span className="hidden sm:inline">AI Tools</span>
                 </TabsTrigger>
-                <TabsTrigger value="support" aria-label="Support"> {/* New Tab */}
+                <TabsTrigger value="support" aria-label="Support">
                   <LifeBuoy className="h-5 w-5 sm:mr-2" />
                   <span className="hidden sm:inline">Support</span>
                 </TabsTrigger>
@@ -49,10 +50,11 @@ export default function HomePage() {
                   <RecentDisasters />
                 </TabsContent>
                 <TabsContent value="ai-tools" className="mt-0 p-3 space-y-6">
+                  <DisasterSeverityAssessmentForm /> {/* New Form Added */}
                   <DisasterInfoForm />
                   <PersonalizedSafetyTipsForm />
                 </TabsContent>
-                <TabsContent value="support" className="mt-0 p-3 space-y-6"> {/* New Tab Content */}
+                <TabsContent value="support" className="mt-0 p-3 space-y-6">
                   <ProfessionalChat />
                   <EmergencyHelp />
                 </TabsContent>
