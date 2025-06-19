@@ -3,8 +3,8 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
-  title: 'QuakeChat',
-  description: 'Earthquake information and safety assistant',
+  title: 'DisasterWatch', // Updated title
+  description: 'Natural disaster information and safety assistant', // Updated description
 };
 
 export default function RootLayout({

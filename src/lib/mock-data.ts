@@ -1,8 +1,9 @@
-import type { Earthquake } from '@/types';
+import type { DisasterEvent } from '@/types';
 
-export const mockRecentEarthquakes: Earthquake[] = [
+export const mockRecentDisasterEvents: DisasterEvent[] = [
   {
     id: '1',
+    type: 'earthquake',
     magnitude: 5.8,
     place: '10km N of San Francisco, CA',
     time: Date.now() - 3600 * 1000 * 2, // 2 hours ago
@@ -11,6 +12,7 @@ export const mockRecentEarthquakes: Earthquake[] = [
   },
   {
     id: '2',
+    type: 'earthquake',
     magnitude: 4.2,
     place: '5km SE of Los Angeles, CA',
     time: Date.now() - 3600 * 1000 * 5, // 5 hours ago
@@ -19,25 +21,37 @@ export const mockRecentEarthquakes: Earthquake[] = [
   },
   {
     id: '3',
+    type: 'earthquake',
     magnitude: 6.1,
-    place: '25km W of Anchorage, AK',
-    time: Date.now() - 3600 * 1000 * 10, // 10 hours ago
-    coordinates: { longitude: -149.9003, latitude: 61.2181 },
-    depth: 20.0,
+    place: 'Near Yangon, Myanmar',
+    time: Date.now() - 3600 * 1000 * 8, // 8 hours ago
+    coordinates: { longitude: 96.1735, latitude: 16.8409 },
+    depth: 25.0,
   },
   {
     id: '4',
+    type: 'earthquake',
+    magnitude: 5.5,
+    place: 'Off the coast of Sumatra, Indonesia',
+    time: Date.now() - 3600 * 1000 * 10, // 10 hours ago
+    coordinates: { longitude: 95.3238, latitude: 3.5952 },
+    depth: 20.0,
+  },
+  {
+    id: '5',
+    type: 'earthquake',
     magnitude: 3.5,
-    place: 'Near The Geysers, CA',
+    place: 'Near Mandalay, Myanmar',
     time: Date.now() - 3600 * 1000 * 12, // 12 hours ago
-    coordinates: { longitude: -122.7558, latitude: 38.7755 },
+    coordinates: { longitude: 96.0891, latitude: 21.9588 },
     depth: 5.1,
   },
 ];
 
-export const mockMapMarkers = mockRecentEarthquakes.map(eq => ({
-  id: eq.id,
-  position: { lat: eq.coordinates.latitude, lng: eq.coordinates.longitude },
-  title: `M ${eq.magnitude} - ${eq.place}`,
-  magnitude: eq.magnitude,
+export const mockDisasterMarkers = mockRecentDisasterEvents.map(event => ({
+  id: event.id,
+  position: { lat: event.coordinates.latitude, lng: event.coordinates.longitude },
+  title: `M ${event.magnitude} - ${event.place} (${event.type})`,
+  magnitude: event.magnitude, // Still used for earthquake marker sizing/color
+  type: event.type,
 }));

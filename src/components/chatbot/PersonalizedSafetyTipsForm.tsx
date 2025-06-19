@@ -15,7 +15,7 @@ import { ShieldCheck, Loader2, Lightbulb } from 'lucide-react';
 
 const formSchema = z.object({
   location: z.string().min(2, { message: "Location must be at least 2 characters." }),
-  recentEarthquakeEvents: z.string().min(10, { message: "Please describe recent events (at least 10 characters)." }),
+  recentDisasterEvents: z.string().min(10, { message: "Please describe recent events (at least 10 characters)." }), // Renamed field
 });
 
 export function PersonalizedSafetyTipsForm() {
@@ -27,7 +27,7 @@ export function PersonalizedSafetyTipsForm() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       location: "",
-      recentEarthquakeEvents: "",
+      recentDisasterEvents: "", // Renamed field
     },
   });
 
@@ -37,7 +37,7 @@ export function PersonalizedSafetyTipsForm() {
       try {
         const res = await getPersonalizedSafetyTips({ 
           location: values.location,
-          recentEarthquakeEvents: values.recentEarthquakeEvents 
+          recentDisasterEvents: values.recentDisasterEvents // Updated field name
         });
         setResult(res);
       } catch (error) {
@@ -59,7 +59,7 @@ export function PersonalizedSafetyTipsForm() {
             Personalized Safety Tips
         </CardTitle>
         <CardDescription>
-          Enter your location and any known recent earthquake activity to get personalized safety advice.
+          Enter your location and any known recent disaster activity to get personalized safety advice.
         </CardDescription>
       </CardHeader>
       <Form {...form}>
@@ -80,12 +80,12 @@ export function PersonalizedSafetyTipsForm() {
             />
             <FormField
               control={form.control}
-              name="recentEarthquakeEvents"
+              name="recentDisasterEvents" // Renamed field
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Recent Earthquake Events</FormLabel>
+                  <FormLabel>Recent Disaster Events</FormLabel>
                   <FormControl>
-                    <Textarea placeholder="e.g., Felt a strong shake 10 minutes ago, news reports a M5.0 nearby." {...field} rows={4}/>
+                    <Textarea placeholder="e.g., Felt a strong shake 10 minutes ago; news reports a M5.0 nearby. Or, local flood warnings issued." {...field} rows={4}/>
                   </FormControl>
                   <FormMessage />
                 </FormItem>

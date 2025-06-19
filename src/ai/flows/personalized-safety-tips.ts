@@ -1,7 +1,7 @@
 'use server';
 
 /**
- * @fileOverview Personalized safety recommendations based on the user's location and current earthquake events.
+ * @fileOverview Personalized safety recommendations based on the user's location and current disaster events.
  *
  * - getPersonalizedSafetyTips - A function that generates personalized safety recommendations.
  * - PersonalizedSafetyTipsInput - The input type for the getPersonalizedSafetyTips function.
@@ -15,9 +15,9 @@ const PersonalizedSafetyTipsInputSchema = z.object({
   location: z
     .string()
     .describe("The user's current location (e.g., city, state)."),
-  recentEarthquakeEvents: z
+  recentDisasterEvents: z // Renamed from recentEarthquakeEvents
     .string()
-    .describe('Information about recent earthquake events in the user location.'),
+    .describe('Information about recent disaster events (e.g., earthquakes, floods, storms) in the user location.'),
 });
 export type PersonalizedSafetyTipsInput = z.infer<
   typeof PersonalizedSafetyTipsInputSchema
@@ -42,12 +42,12 @@ const prompt = ai.definePrompt({
   name: 'personalizedSafetyTipsPrompt',
   input: {schema: PersonalizedSafetyTipsInputSchema},
   output: {schema: PersonalizedSafetyTipsOutputSchema},
-  prompt: `You are an AI assistant specializing in providing personalized safety recommendations during and after earthquake events.
+  prompt: `You are an AI assistant specializing in providing personalized safety recommendations during and after disaster events.
 
-  Based on the user's current location and recent earthquake events, generate personalized safety recommendations.
+  Based on the user's current location and recent disaster events, generate personalized safety recommendations.
 
   Location: {{{location}}}
-  Recent Earthquake Events: {{{recentEarthquakeEvents}}}
+  Recent Disaster Events: {{{recentDisasterEvents}}}
 
   Provide specific and actionable advice to ensure the user's safety.
   The safetyRecommendations should be formatted as a list.
