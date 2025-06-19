@@ -18,3 +18,17 @@ export interface ChatMessage {
   text: string;
   timestamp: Date;
 }
+
+export interface Resource {
+  id: string;
+  name: string;
+  type: 'shelter' | 'medical' | 'food' | 'water' | 'other';
+  address: string;
+  contact?: string;
+  operatingHours?: string;
+  notes?: string;
+  coordinates?: {
+    latitude: number;
+    longitude: number;
+  };
+}

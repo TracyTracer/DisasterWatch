@@ -4,13 +4,14 @@ import { DisasterMap } from '@/components/disaster/DisasterMap';
 import { RecentDisasters } from '@/components/disaster/RecentDisasters';
 import { DisasterInfoForm } from '@/components/chatbot/DisasterInfoForm';
 import { PersonalizedSafetyTipsForm } from '@/components/chatbot/PersonalizedSafetyTipsForm';
-import { DisasterSeverityAssessmentForm } from '@/components/chatbot/DisasterSeverityAssessmentForm'; // New import
+import { DisasterSeverityAssessmentForm } from '@/components/chatbot/DisasterSeverityAssessmentForm';
+import { ResourceLocatorForm } from '@/components/chatbot/ResourceLocatorForm'; // New import
 import { ProfessionalChat } from '@/components/chatbot/ProfessionalChat';
 import { EmergencyHelp } from '@/components/emergency/EmergencyHelp';
 import { AlertSettings } from '@/components/alerts/AlertSettings';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { MessageCircle, BellRing, Activity, LifeBuoy, ShieldAlert } from 'lucide-react'; // Added ShieldAlert
+import { MessageCircle, BellRing, Activity, LifeBuoy, ShieldAlert } from 'lucide-react';
 
 export default function HomePage() {
   return (
@@ -50,7 +51,8 @@ export default function HomePage() {
                   <RecentDisasters />
                 </TabsContent>
                 <TabsContent value="ai-tools" className="mt-0 p-3 space-y-6">
-                  <DisasterSeverityAssessmentForm /> {/* New Form Added */}
+                  <DisasterSeverityAssessmentForm />
+                  <ResourceLocatorForm /> {/* New Form Added */}
                   <DisasterInfoForm />
                   <PersonalizedSafetyTipsForm />
                 </TabsContent>

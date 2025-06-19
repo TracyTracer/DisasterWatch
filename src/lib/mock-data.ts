@@ -1,4 +1,5 @@
-import type { DisasterEvent } from '@/types';
+
+import type { DisasterEvent, Resource } from '@/types';
 
 export const mockRecentDisasterEvents: DisasterEvent[] = [
   {
@@ -55,3 +56,59 @@ export const mockDisasterMarkers = mockRecentDisasterEvents.map(event => ({
   magnitude: event.magnitude, // Still used for earthquake marker sizing/color
   type: event.type,
 }));
+
+export const mockResources: Resource[] = [
+  {
+    id: 'res-001',
+    name: 'City Central Shelter',
+    type: 'shelter',
+    address: '123 Main St, Yangon, Myanmar',
+    contact: '09-123-4567',
+    operatingHours: '24/7 during emergencies',
+    notes: 'Pets allowed in carriers. Food and water provided.',
+    coordinates: { latitude: 16.8000, longitude: 96.1500 },
+  },
+  {
+    id: 'res-002',
+    name: 'General Hospital - ER',
+    type: 'medical',
+    address: '456 Health Ave, Yangon, Myanmar',
+    contact: '192 (Emergency)',
+    operatingHours: '24/7',
+    notes: 'Prioritizing critical injuries.',
+    coordinates: { latitude: 16.8100, longitude: 96.1600 },
+  },
+  {
+    id: 'res-003',
+    name: 'Community Food Bank',
+    type: 'food',
+    address: '789 Charity Rd, Mandalay, Myanmar',
+    operatingHours: '9 AM - 5 PM (Emergency hours may vary)',
+    notes: 'Non-perishable food items available. Bring ID if possible.',
+  },
+  {
+    id: 'res-004',
+    name: 'Downtown Water Point',
+    type: 'water',
+    address: 'Plaza Park, Yangon, Myanmar',
+    operatingHours: 'Activated during emergencies',
+    notes: 'Clean drinking water distribution.',
+  },
+  {
+    id: 'res-005',
+    name: 'Red Cross First Aid Station - North',
+    type: 'medical',
+    address: 'North Suburb Community Hall, Yangon',
+    operatingHours: '10 AM - 6 PM (Emergency hours may vary)',
+    notes: 'Basic first aid and medical advice.',
+  },
+  {
+    id: 'res-006',
+    name: 'Westside Animal Shelter (Temporary for Disasters)',
+    type: 'shelter',
+    address: 'Old Warehouse, West Industrial Park, Yangon',
+    contact: '09-987-6543',
+    operatingHours: '24/7 during emergencies',
+    notes: 'For displaced pets. Please bring any supplies you have for your animal.',
+  }
+];
