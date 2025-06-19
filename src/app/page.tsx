@@ -1,12 +1,15 @@
+
 import { Header } from '@/components/layout/Header';
 import { DisasterMap } from '@/components/disaster/DisasterMap';
 import { RecentDisasters } from '@/components/disaster/RecentDisasters';
 import { DisasterInfoForm } from '@/components/chatbot/DisasterInfoForm';
 import { PersonalizedSafetyTipsForm } from '@/components/chatbot/PersonalizedSafetyTipsForm';
+import { ProfessionalChat } from '@/components/chatbot/ProfessionalChat';
+import { EmergencyHelp } from '@/components/emergency/EmergencyHelp';
 import { AlertSettings } from '@/components/alerts/AlertSettings';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { ListChecks, MessageCircle, BellRing, Activity } from 'lucide-react';
+import { MessageCircle, BellRing, Activity, LifeBuoy } from 'lucide-react';
 
 export default function HomePage() {
   return (
@@ -22,7 +25,7 @@ export default function HomePage() {
           {/* Right Column: Tabs for Info */}
           <div className="lg:col-span-1">
             <Tabs defaultValue="recent-events" className="h-full flex flex-col">
-              <TabsList className="grid w-full grid-cols-3 mb-4">
+              <TabsList className="grid w-full grid-cols-4 mb-4"> {/* Updated to 4 cols */}
                 <TabsTrigger value="recent-events" aria-label="Recent Events">
                   <Activity className="h-5 w-5 sm:mr-2" />
                   <span className="hidden sm:inline">Recent Events</span>
@@ -30,6 +33,10 @@ export default function HomePage() {
                 <TabsTrigger value="ai-tools" aria-label="AI Tools">
                   <MessageCircle className="h-5 w-5 sm:mr-2" />
                   <span className="hidden sm:inline">AI Tools</span>
+                </TabsTrigger>
+                <TabsTrigger value="support" aria-label="Support"> {/* New Tab */}
+                  <LifeBuoy className="h-5 w-5 sm:mr-2" />
+                  <span className="hidden sm:inline">Support</span>
                 </TabsTrigger>
                 <TabsTrigger value="alerts" aria-label="Alert Settings">
                   <BellRing className="h-5 w-5 sm:mr-2" />
@@ -44,6 +51,10 @@ export default function HomePage() {
                 <TabsContent value="ai-tools" className="mt-0 p-3 space-y-6">
                   <DisasterInfoForm />
                   <PersonalizedSafetyTipsForm />
+                </TabsContent>
+                <TabsContent value="support" className="mt-0 p-3 space-y-6"> {/* New Tab Content */}
+                  <ProfessionalChat />
+                  <EmergencyHelp />
                 </TabsContent>
                 <TabsContent value="alerts" className="mt-0 p-3">
                   <AlertSettings />
