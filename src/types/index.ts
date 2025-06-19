@@ -17,6 +17,7 @@ export interface ChatMessage {
   sender: 'user' | 'ai';
   text: string;
   timestamp: Date;
+  photoDataUri?: string; // Optional image for the message
 }
 
 export interface Resource {

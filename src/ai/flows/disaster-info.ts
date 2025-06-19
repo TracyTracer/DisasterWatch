@@ -13,6 +13,12 @@ import {z} from 'genkit';
 
 const DisasterInfoInputSchema = z.object({
   query: z.string().describe('The query for disaster information.'),
+  photoDataUri: z
+    .string()
+    .optional()
+    .describe(
+      "An optional photo relevant to the query, as a data URI that must include a MIME type and use Base64 encoding. Expected format: 'data:<mimetype>;base64,<encoded_data>'."
+    ),
 });
 export type DisasterInfoInput = z.infer<typeof DisasterInfoInputSchema>;
 
@@ -31,7 +37,12 @@ const prompt = ai.definePrompt({
   output: {schema: DisasterInfoOutputSchema},
   prompt: `You are an expert in providing information about natural disasters. Use your knowledge base to answer the following question:
 
-{{{query}}}`, 
+User's query: {{{query}}}
+{{#if photoDataUri}}
+The user has also provided the following image related to their query:
+{{media url=photoDataUri}}
+Consider this image if it helps answer the query.
+{{/if}}`,
 });
 
 const disasterInfoFlow = ai.defineFlow(
