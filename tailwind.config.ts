@@ -93,7 +93,38 @@ export default {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
       },
+      typography: ({ theme }: { theme: any }) => ({
+        DEFAULT: {
+          css: {
+            color: theme('colors.foreground'),
+            a: {
+              color: theme('colors.primary.DEFAULT'),
+              '&:hover': {
+                color: theme('colors.primary.DEFAULT'),
+                opacity: '0.8',
+              },
+            },
+            // Add more styles for prose if needed
+          },
+        },
+        invert: { // For dark backgrounds
+          css: {
+            color: theme('colors.foreground'), // Uses the main foreground color
+             a: {
+              color: theme('colors.accent.DEFAULT'), // Use accent for links on dark
+              '&:hover': {
+                color: theme('colors.accent.DEFAULT'),
+                opacity: '0.8',
+              },
+            },
+            strong: {
+              color: theme('colors.foreground'),
+            },
+            // You might need to adjust h1, h2, etc. colors if they don't inherit properly
+          }
+        }
+      }),
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [require('tailwindcss-animate'), require('@tailwindcss/typography')],
 } satisfies Config;
