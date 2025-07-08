@@ -71,7 +71,8 @@ export function ProfessionalChat() {
         setPreviewImage(reader.result as string);
       };
       reader.readAsDataURL(file);
-      form.setValue("photo", event.target.files);
+      form.setValue("photo", event.target.files ?? undefined);
+
     } else {
       setPreviewImage(null);
       form.setValue("photo", undefined);
@@ -189,7 +190,13 @@ export function ProfessionalChat() {
             </Button>
           </div>
           <div className="relative w-full max-w-[150px] h-auto aspect-video rounded-md border border-border overflow-hidden">
-            <Image src={previewImage} alt="Preview" layout="fill" objectFit="contain" />
+           <Image
+  src={previewImage}
+  alt="Preview"
+  fill
+  style={{ objectFit: "contain" }}
+/>
+
           </div>
         </div>
       )}

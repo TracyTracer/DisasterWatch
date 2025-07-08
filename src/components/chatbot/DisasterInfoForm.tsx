@@ -1,4 +1,6 @@
 "use client";
+import { database } from '@/lib/firebase';
+import { ref, push } from 'firebase/database';
 
 import { useState, useTransition } from 'react';
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -34,6 +36,13 @@ export function DisasterInfoForm() {
       try {
         const res = await disasterInfo({ query: values.query }); // Updated function call
         setResult(res);
+        const messageRef = ref(database, 'disaster-queries');
+await push(messageRef, {
+  query: values.query,
+  answer: res.answer,
+  timestamp: new Date().toISOString()
+});
+
       } catch (error) {
         console.error("Error fetching disaster info:", error);
         toast({

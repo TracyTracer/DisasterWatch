@@ -12,6 +12,7 @@ import { AlertSettings } from '@/components/alerts/AlertSettings';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { MessageCircle, BellRing, Activity, LifeBuoy, ShieldAlert } from 'lucide-react';
+import Link from 'next/link';
 
 export default function HomePage() {
   return (
@@ -67,6 +68,12 @@ export default function HomePage() {
             </Tabs>
           </div>
         </div>
+        <ul>
+        <li><Link href="/login">Login</Link></li>
+        <li><Link href="/signup">Signup</Link></li>
+        <li><Link href="/check">Check</Link></li>
+        <li><Link href="/logout">Logout</Link></li>
+        </ul>
       </main>
       <footer className="text-center p-4 text-sm text-muted-foreground border-t border-border">
         DisasterWatch &copy; {new Date().getFullYear()} - Stay Safe.

@@ -1,34 +1,25 @@
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getDatabase } from 'firebase/database';
+import { getAuth } from 'firebase/auth';
 
-import { initializeApp, getApp, getApps } from "firebase/app";
-import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
-// To use Firebase Storage, uncomment the next line
-// import { getStorage } from "firebase/storage";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
-// IMPORTANT: Replace these with your actual Firebase project configuration values
-// by setting them in your .env.local file (or .env for this environment)
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID, // Optional
+  apiKey: "AIzaSyB1gxPh44whPiZraTecv5RJuK3O-qRnQKk",
+  authDomain: "crisiscompanion-b48dc.firebaseapp.com",
+  projectId: "crisiscompanion-b48dc",
+  storageBucket: "crisiscompanion-b48dc.firebasestorage.app",
+  messagingSenderId: "695344690190",
+  appId: "1:695344690190:web:e7cd279eb972814241385f",
+  measurementId: "G-J08HHLVD9H"
 };
 
 // Initialize Firebase
-let app;
-if (!getApps().length) {
-  app = initializeApp(firebaseConfig);
-} else {
-  app = getApp();
-}
-
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
 const auth = getAuth(app);
-const db = getFirestore(app);
-// To use Firebase Storage, uncomment the next line
-// const storage = getStorage(app);
-
-export { app, auth, db /*, storage */ };
+export { app, database, auth };
