@@ -97,7 +97,7 @@ export default function SignupPage() {
   const handleDobChange = (e: React.ChangeEvent<HTMLInputElement>) => setDob(e.target.value);
   const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => setLocation(e.target.value);
 
-  // Revalidate on any field change and update button state
+  // Revalidate on every field change and update button state
   const revalidate = () => {
     const newErrors: {email?: string; password?: string; confirmPassword?: string} = {};
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
@@ -113,26 +113,42 @@ export default function SignupPage() {
     return Object.keys(newErrors).length === 0;
   };
 
-  // Update canProceed whenever errors or fields change
+  // Revalidate on every field change using useEffect
   React.useEffect(() => {
-    const valid =
-      fullName && phone && gender && dob && location &&
-      email && password && confirmPassword &&
-      Object.keys(errors).length === 0;
-    setCanProceed(!!valid);
-  }, [fullName, phone, gender, dob, location, email, password, confirmPassword, errors]);
+    revalidate();
+  }, [fullName, phone, gender, dob, location, email, password, confirmPassword]);
+
+  // Only set canProceed if all fields are filled and validate() returns true
+  React.useEffect(() => {
+    const allFilled = fullName && phone && gender && dob && location && email && password && confirmPassword;
+    setCanProceed(!!allFilled && validate());
+  }, [fullName, phone, gender, dob, location, email, password, confirmPassword]);
+
+  // Helper for missing fields warning
+  const missingFields = () => {
+    const fields = [];
+    if (!fullName) fields.push('Full Name');
+    if (!phone) fields.push('Phone Number');
+    if (!gender) fields.push('Gender');
+    if (!dob) fields.push('Date of Birth');
+    if (!location) fields.push('Location');
+    if (!email) fields.push('Email');
+    if (!password) fields.push('Password');
+    if (!confirmPassword) fields.push('Confirm Password');
+    return fields;
+  };
 
   return (
-    <div className="p-4">
+    <div className="p-4 text-black text-lg">
       {step === 1 ? (
         <form onSubmit={handleNext}>
-          <h2 className="text-xl font-bold mb-4">Sign Up</h2>
+          <h2 className="text-2xl font-bold mb-4">Sign Up</h2>
           <input
             type="text"
             placeholder="Full Name"
             value={fullName}
             onChange={e => { handleFullNameChange(e); revalidate(); }}
-            className="block mb-2 p-2 border rounded w-full"
+            className="block mb-2 p-2 border rounded w-full text-black text-lg"
             required
           />
           <input
@@ -140,13 +156,13 @@ export default function SignupPage() {
             placeholder="Phone Number"
             value={phone}
             onChange={e => { handlePhoneChange(e); revalidate(); }}
-            className="block mb-2 p-2 border rounded w-full"
+            className="block mb-2 p-2 border rounded w-full text-black text-lg"
             required
           />
           <select
             value={gender}
             onChange={e => { handleGenderChange(e); revalidate(); }}
-            className="block mb-2 p-2 border rounded w-full"
+            className="block mb-2 p-2 border rounded w-full text-black text-lg"
             required
           >
             <option value="">Select Gender</option>
@@ -159,7 +175,7 @@ export default function SignupPage() {
             placeholder="Date of Birth"
             value={dob}
             onChange={e => { handleDobChange(e); revalidate(); }}
-            className="block mb-2 p-2 border rounded w-full"
+            className="block mb-2 p-2 border rounded w-full text-black text-lg"
             required
           />
           <input
@@ -167,7 +183,7 @@ export default function SignupPage() {
             placeholder="Email"
             value={email}
             onChange={e => { handleEmailChange(e); revalidate(); }}
-            className="block mb-2 p-2 border rounded w-full"
+            className="block mb-2 p-2 border rounded w-full text-black text-lg"
             required
           />
           {errors.email && <div className="text-red-500 text-sm mb-2">{errors.email}</div>}
@@ -176,7 +192,7 @@ export default function SignupPage() {
             placeholder="Password"
             value={password}
             onChange={e => { handlePasswordChange(e); revalidate(); }}
-            className="block mb-2 p-2 border rounded w-full"
+            className="block mb-2 p-2 border rounded w-full text-black text-lg"
             required
           />
           {errors.password && <div className="text-red-500 text-sm mb-2">{errors.password}</div>}
@@ -185,14 +201,14 @@ export default function SignupPage() {
             placeholder="Confirm Password"
             value={confirmPassword}
             onChange={e => { handleConfirmPasswordChange(e); revalidate(); }}
-            className="block mb-2 p-2 border rounded w-full"
+            className="block mb-2 p-2 border rounded w-full text-black text-lg"
             required
           />
           {errors.confirmPassword && <div className="text-red-500 text-sm mb-2">{errors.confirmPassword}</div>}
           <select
             value={location}
             onChange={e => { handleLocationChange(e); revalidate(); }}
-            className="block mb-4 p-2 border rounded w-full"
+            className="block mb-4 p-2 border rounded w-full text-black text-lg"
             required
           >
             <option value="">Select Location</option>
@@ -202,29 +218,36 @@ export default function SignupPage() {
           </select>
           <button
             type="submit"
-            className="bg-green-500 text-white px-4 py-2 rounded"
+            className={`px-4 py-2 rounded text-lg ${canProceed ? 'bg-green-500 text-white' : 'bg-gray-400 text-white cursor-not-allowed'}`}
             disabled={!canProceed}
           >
             Next
           </button>
-          {(!email || !password || !confirmPassword || Object.keys(errors).length > 0) && (
+          {((!email || !password || !confirmPassword || Object.keys(errors).length > 0) || missingFields().length > 0) && (
             <div className="text-yellow-600 text-sm mt-2">
-              {(!email || !password || !confirmPassword)
-                ? 'Please enter a valid email and password (at least 8 characters, uppercase, lowercase, number, special character, passwords must match).'
-                : null}
+              {missingFields().length > 0
+                ? `Please fill: ${missingFields().join(', ')}`
+                : 'Please enter a valid email and password (at least 8 characters, uppercase, lowercase, number, special character, passwords must match).'}
             </div>
           )}
         </form>
       ) : (
         <form onSubmit={handleSignup}>
-          <h2 className="text-xl font-bold mb-4">User Agreement</h2>
-          <div className="mb-4 p-3 border rounded bg-gray-50 text-sm max-h-60 overflow-y-auto">
+          <h2 className="text-2xl font-bold mb-4">User Agreement</h2>
+          <div className="mb-4 p-3 border rounded bg-gray-50 text-lg max-h-60 overflow-y-auto text-black">
             <p>
-              Please read and agree to the terms and privacy policy before signing up.<br /><br />
-              [Insert your user agreement and privacy policy text here.]
+              By signing up, you agree to the following:
+              <ul className="list-disc pl-5 mt-2">
+                <li>Your information will be used to provide disaster-related services and notifications.</li>
+                <li>You consent to receive important alerts and updates via email or phone.</li>
+                <li>Your data will be stored securely and not shared with third parties except as required by law.</li>
+                <li>You are responsible for keeping your login credentials confidential.</li>
+                <li>Misuse of the platform may result in account suspension or removal.</li>
+                <li>For more details, please review our <a href="#" className="underline">Privacy Policy</a> and <a href="#" className="underline">Terms of Service</a>.</li>
+              </ul>
             </p>
           </div>
-          <label className="flex items-center mb-4">
+          <label className="flex items-center mb-4 text-black text-lg">
             <input
               type="checkbox"
               checked={agree}
@@ -236,7 +259,7 @@ export default function SignupPage() {
           </label>
           <button
             type="submit"
-            className="bg-green-500 text-white px-4 py-2 rounded"
+            className={`px-4 py-2 rounded text-lg ${agree ? 'bg-green-500 text-white' : 'bg-gray-400 text-white cursor-not-allowed'}`}
             disabled={!agree}
           >
             Sign Up
