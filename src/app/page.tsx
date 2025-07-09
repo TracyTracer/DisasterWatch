@@ -1,7 +1,7 @@
 
 import { Header } from '@/components/layout/Header';
-import { DisasterMap } from '@/components/disaster/DisasterMap';
 import { RecentDisasters } from '@/components/disaster/RecentDisasters';
+import { DisasterMap } from '@/components/disaster/DisasterMap';
 import { DisasterInfoForm } from '@/components/chatbot/DisasterInfoForm';
 import { PersonalizedSafetyTipsForm } from '@/components/chatbot/PersonalizedSafetyTipsForm';
 import { DisasterSeverityAssessmentForm } from '@/components/chatbot/DisasterSeverityAssessmentForm';
