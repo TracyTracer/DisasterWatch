@@ -1,21 +1,33 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation'; // ✅ for redirecting
+import { useRouter } from 'next/navigation';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
 
 export default function LoginPage() {
-  const router = useRouter(); // ✅ initialize router
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // 🔄 Force refresh token to get latest claims
+      const tokenResult = await user.getIdTokenResult(true);
+      const claims = tokenResult.claims;
+
       alert('Login successful!');
-      router.push('/'); // ✅ redirect to homepage
+
+      // ✅ Redirect based on role
+      if (claims.admin) {
+        router.push('/admin-dashboard'); // redirect to admin dashboard
+      } else {
+        router.push('/user-dashboard'); // redirect to user dashboard
+      }
     } catch (error: any) {
       alert(error.message);
       console.error('Login error:', error.message);
