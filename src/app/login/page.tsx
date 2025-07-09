@@ -24,7 +24,7 @@ export default function LoginPage() {
 
       // ✅ Redirect based on role
       if (claims.admin) {
-        router.push('/admin-dashboard'); // redirect to admin dashboard
+        router.push('/adminDashboard'); // redirect to admin dashboard
       } else {
         router.push('/user-dashboard'); // redirect to user dashboard
       }
